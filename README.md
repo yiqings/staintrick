@@ -21,7 +21,7 @@ Normalized-v3: Template `NORM-TCGA-AASSYQPA.tif` (from test set).
 | *ResNet-18* | w/o Pretrain | w/ Pretrain |
 | -- | -- | -- |
 | w/o Norma | 64.958 | 58.788 |
-| w/ Norm v1 | 78.914 | |
+| w/ Norm v1 | 78.914 | 78.106 |
 | w/ Norm v2 | | |
-| w/ Norm v3 | | |
+| w/ Norm v3 | 89.624| 89.262|
 
