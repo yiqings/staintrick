@@ -3,6 +3,7 @@ from torch import nn
 from typing import List, Optional, Tuple
 from utils import init_weights, LOGITS, FEATURES
 
+
 class TIMM(nn.Module):
     def __init__(
         self,

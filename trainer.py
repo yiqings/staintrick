@@ -11,8 +11,9 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader
 from torch.optim import AdamW
 from torch.optim import lr_scheduler
+
 ######
-from model import TIMM, LabPreNorm
+from model import TIMM, LabPreNorm, LabRandNorm
 from set import HistoDataset
 from utils import (
     AverageMeter,
@@ -87,7 +88,7 @@ class Trainer:
         ##### Create folders for the outputs.
         postfix = time.strftime("%Y%m%d_%H:%M")
         if hasattr(config, "postfix") and config.postfix != "":
-            postfix += '_' + config.postfix
+            postfix += "_" + config.postfix
 
         self.output_path = os.path.join(config.output_path, postfix)
 
@@ -97,18 +98,6 @@ class Trainer:
 
         OmegaConf.save(config=config, f=os.path.join(self.output_path, "config.yaml"))
         ##### Create models.
-        model = TIMM(
-            model_name=config.model,
-            num_classes=num_classes,
-        )
-        
-        if hasattr(config, "prenorm") and config.prenorm:
-            print('Using PreNorm.')
-            prenorm = True
-            model = LabPreNorm(model)
-        else:
-            prenorm = False
-
         if hasattr(config, "gpu_id"):
             self.device = torch.device(
                 "cuda:{}".format(config.gpu_id) if torch.cuda.is_available() else "cpu"
@@ -116,9 +105,24 @@ class Trainer:
         else:
             self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+        model = TIMM(
+            model_name=config.model,
+            num_classes=num_classes,
+        )
+
+        if hasattr(config, "prenorm") and config.prenorm:
+            print("Using PreNorm.")
+            prenorm = True
+            model = LabPreNorm(model, self.device)
+        else:
+            prenorm = False
+
+        if hasattr(config, "randnorm") and config.randnorm:
+            print("Using RandNorm.")
+            model = LabRandNorm(model, self.device)
+
         self.model = model.to(self.device)
 
-        
         if not prenorm:
             self.optimizer = AdamW(
                 params=self.model.parameters(),
@@ -127,10 +131,13 @@ class Trainer:
             )
         else:
             self.optimizer = AdamW(
-                params = [
-                    {"params": model.mu.parameters(), "lr": config.learning_rate/10},
-                    {"params": model.sigma.parameters(), "lr": config.learning_rate/10},
-                    {"params": self.model.model.parameters()}
+                params=[
+                    {"params": model.mu, "lr": config.learning_rate / 10},
+                    {
+                        "params": model.sigma,
+                        "lr": config.learning_rate / 50,
+                    },
+                    {"params": self.model.model.parameters()},
                 ],
                 lr=config.learning_rate,
                 weight_decay=config.weight_decay,
