@@ -13,7 +13,12 @@ from torch.optim import AdamW
 from torch.optim import lr_scheduler
 
 ######
-from model import TIMM, LabPreNorm, LabRandNorm
+from model import (
+    TIMM, 
+    LabPreNorm, 
+    LabEMAPreNorm,
+    LabRandNorm,
+)
 from set import HistoDataset
 from utils import (
     AverageMeter,
@@ -116,6 +121,14 @@ class Trainer:
             model = LabPreNorm(model, self.device)
         else:
             prenorm = False
+        
+        if hasattr(config, "emaprenorm") and config.emaprenorm:
+            print("Using EMAPreNorm.")
+            model = LabEMAPreNorm(
+                model=model, 
+                device=self.device,
+                lmbd=config.emaprenorm_lambda if hasattr(config, "emaprenorm_lambda") else 0,
+            )
 
         if hasattr(config, "randnorm") and config.randnorm:
             print("Using RandNorm.")

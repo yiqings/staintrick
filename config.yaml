@@ -1,17 +1,21 @@
-gpu_id: 1
+gpu_id: 0
 seed: 42
 ### Roots
-train_root: "/home/yiqing/data/crc/NCT-CRC-HE-100K-NONORM"
+train_root: "/home/yiqing/data/crc/NCT-CRC-HE-100K-NONORM-8class"
+# train_root: "/home/yiqing/data/crc/NCT-CRC-HE-100K-NONORM"
 # train_root: "/home/yiqing/data/crc/NCT-CRC-HE-100K"
 # train_root: "/home/yiqing/data/crc/NCT-CRC-HE-100K-NONORM-LAB-NORM-V3"
-test_root: "/home/yiqing/data/crc/CRC-VAL-HE-7K"
+# test_root: "/home/yiqing/data/crc/CRC-VAL-HE-7K"
+test_root: "/home/yiqing/data/crc/CRC-VAL-HE-7K-8class"
 output_path: "/home/yiqing/stain/result/" 
-postfix: 'NONORM_woPretrain_wRandNorm'
+postfix: 'NONORM8class_woPretrain'
 ### Model & Schemes
 model: "resnet18" # model_name in Timm
 pretrained: False # If to use the ImageNet pretrained weights
 prenorm: False # If to use the prenorm scheme
-randnorm: True # If to use the randnorm scheme
+emaprenorm: False # If to use the EMA variant of prenorm scheme
+emaprenorm_lambda: 0.01
+randnorm: False # If to use the randnorm scheme
 ### Training Configurations
 num_workers: 8
 batch_size: 256

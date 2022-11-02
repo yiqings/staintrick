@@ -13,15 +13,17 @@ Tune all the hyper-parameters in [`config.yaml`](config.yaml)
 
 Datasets can be downloadee use [`preprocess/download.py`](preprocess/download.py).
 
-Normalized-v1: Template `NORM-AAAWMSFI.tif` (from training set).
-Normalized-v2: Template `STR-AAEILWWE.tif` (from training set).
-Normalized-v3: Template `NORM-TCGA-AASSYQPA.tif` (from test set).
+- Normalized-v1: Template `NORM-AAAWMSFI.tif` (from training set).
+- Normalized-v2: Template `STR-AAEILWWE.tif` (from training set).
+- Normalized-v3: Template `NORM-TCGA-AASSYQPA.tif` (from test set).
 
 ## Results
 | *ResNet-18* | w/o Pretrain | w/ Pretrain |
 | -- | -- | -- |
-| w/o Norma | 64.958 | 58.788 |
-| w/ Norm v1 | 78.914 | 78.106 |
-| w/ Norm v2 | | |
-| w/ Norm v3 | 89.624| 89.262|
+| w/o Norm    | 64.958 | 58.788 |
+| w/ Norm v1  | 78.914 | 78.106 |
+| w/ Norm v3  | 89.624 | 89.262 |
+| w/ RandNorm | 88.454 | |
+| w/ PreNorm  | 92.549 | |
+| w/ EMAPreNorm (l=0) | 91.504 | |
 
