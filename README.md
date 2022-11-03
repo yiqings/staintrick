@@ -18,6 +18,18 @@ Datasets can be downloadee use [`preprocess/download.py`](preprocess/download.py
 - Normalized-v2: Stain normalized with template `STR-AAEILWWE.tif` (from training set).
 - Normalized-v3: Stain normalized with template `NORM-TCGA-AASSYQPA.tif` (from test set).
 
+## To Run the Experinments
+Generally, we don't depend on any specific libraries.
+
+If datasets are not on you device, use [`download.py`](preprocess/download.py) to download the zip files and unzip in the terminal.
+
+1. Firstly, change the hyperparameters in `config.yaml`,
+e.g., `train_root` pointed to the training set, `test_root` to the validation set, `output_path` to the output path where loggings and checkpoints are saved. 
+2. To train the model, simpily run
+```
+python main.py
+```
+
 ## Methods
 1. `LabPreNorm`: Learnable normalization parameters (i.e., channel mean and channel std) of the template in LAB color space, and use the Reinhard's normalization method.
 3. `LabEMAPreNorm`: Use EMA to update the normalization template. Hyper-parameter: lambda. When lambda=0, degenerates to vanilla Reinhard's normalization method; when lambda=1, degenerates to a speical case of `LabRandNorm`.

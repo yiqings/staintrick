@@ -91,7 +91,7 @@ class Trainer:
         num_classes = len(os.listdir(config.train_root))
 
         ##### Create folders for the outputs.
-        postfix = time.strftime("%Y%m%d_%H:%M")
+        postfix = time.strftime("%Y%m%d_%H:%M") + '_' + config.model
         if hasattr(config, "postfix") and config.postfix != "":
             postfix += "_" + config.postfix
 
