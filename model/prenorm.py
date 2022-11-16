@@ -44,7 +44,7 @@ class LabPreNorm(nn.Module):
 
         mu = repeat(mu, "b c -> b c h w", h=H, w=W)
         sigma = repeat(sigma + self.epsilon, "b c -> b c h w", h=H, w=W)
-        
+
         mu_prime = repeat(self.mu + self.mu0, "c -> b c h w", b=B, h=H, w=W)
         sigma_prime = repeat(self.sigma + self.sigma0, "c -> b c h w", b=B, h=H, w=W)
 
@@ -82,12 +82,12 @@ class LabEMAPreNorm(nn.Module):
         mu = x.mean(axis=(2, 3))
         sigma = x.std(axis=(2, 3))
 
-        self.mu = (1-self.lmbd) * self.mu + self.lmbd * mu.mean(axis=0)
-        self.sigma = (1-self.lmbd) * self.sigma + self.lmbd * sigma.mean(axis=0)
-        
+        self.mu = (1 - self.lmbd) * self.mu + self.lmbd * mu.mean(axis=0)
+        self.sigma = (1 - self.lmbd) * self.sigma + self.lmbd * sigma.mean(axis=0)
+
         mu = repeat(mu, "b c -> b c h w", h=H, w=W)
         sigma = repeat(sigma + self.epsilon, "b c -> b c h w", h=H, w=W)
-        
+
         mu_prime = repeat(self.mu, "c -> b c h w", b=B, h=H, w=W)
         sigma_prime = repeat(self.sigma, "c -> b c h w", b=B, h=H, w=W)
 
@@ -95,6 +95,7 @@ class LabEMAPreNorm(nn.Module):
         x = lab_to_rgb(x)
 
         return self.model(x)
+
 
 if __name__ == "__main__":
     import torch

@@ -27,10 +27,10 @@ class LabRandNorm(nn.Module):
         assert (
             x.max() <= 1 and x.min() >= 0
         ), f"image should be scaled to [0,1] rather than [0,256], current scale {x.min()}-{x.max()}"
-        
+
         if not self.training:
             return self.model(x)
-        
+
         B, _, H, W = x.shape
 
         if self.idx == None:

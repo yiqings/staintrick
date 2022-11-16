@@ -14,8 +14,8 @@ from torch.optim import lr_scheduler
 
 ######
 from model import (
-    TIMM, 
-    LabPreNorm, 
+    TIMM,
+    LabPreNorm,
     LabEMAPreNorm,
     LabRandNorm,
 )
@@ -91,7 +91,7 @@ class Trainer:
         num_classes = len(os.listdir(config.train_root))
 
         ##### Create folders for the outputs.
-        postfix = time.strftime("%Y%m%d_%H:%M") + '_' + config.model
+        postfix = time.strftime("%Y%m%d_%H:%M") + "_" + config.model
         if hasattr(config, "postfix") and config.postfix != "":
             postfix += "_" + config.postfix
 
@@ -121,13 +121,15 @@ class Trainer:
             model = LabPreNorm(model, self.device)
         else:
             prenorm = False
-        
+
         if hasattr(config, "emaprenorm") and config.emaprenorm:
             print("Using EMAPreNorm.")
             model = LabEMAPreNorm(
-                model=model, 
+                model=model,
                 device=self.device,
-                lmbd=config.emaprenorm_lambda if hasattr(config, "emaprenorm_lambda") else 0,
+                lmbd=config.emaprenorm_lambda
+                if hasattr(config, "emaprenorm_lambda")
+                else 0,
             )
 
         if hasattr(config, "randnorm") and config.randnorm:

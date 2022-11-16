@@ -1,27 +1,25 @@
 gpu_id: 1
-seed: 42
+seed: 43
 ### Roots
-train_root: "/home/yiqing/data/crc/NCT-CRC-HE-100K-NONORM-8class"
-# train_root: "/home/yiqing/data/crc/NCT-CRC-HE-100K-NONORM"
-# train_root: "/home/yiqing/data/crc/NCT-CRC-HE-100K"
-# train_root: "/home/yiqing/data/crc/NCT-CRC-HE-100K-NONORM-LAB-NORM-V3"
-# test_root: "/home/yiqing/data/crc/CRC-VAL-HE-7K"
-test_root: "/home/yiqing/data/crc/CRC-VAL-HE-7K-8class"
+train_root: /home/yiqing/data/crc/NCT-CRC-HE-100K
+test_root: "/home/yiqing/data/crc/CRC-VAL-HE-7K"
 output_path: "/home/yiqing/stain/result/" 
-postfix: 'NONORM8class_woPretrain_wPreNorm'
+postfix: full
 ### Model & Schemes
-model: "resnet50" # model_name in Timm
+# model: "resnet50" # model_name in Timm
+model: "vit_small_patch16_224"
+# model: "vit_tiny_patch16_224"
 pretrained: False # If to use the ImageNet pretrained weights
-prenorm: True # If to use the prenorm scheme
+prenorm: False # If to use the prenorm scheme
 emaprenorm: False # If to use the EMA variant of prenorm scheme
 emaprenorm_lambda: 0.01
 randnorm: False # If to use the randnorm scheme
 ### Training Configurations
 num_workers: 8
 batch_size: 64
-learning_rate: 5.0e-4
-weight_decay: 1.0e-5
-min_learning_rate: 5.0e-6
+learning_rate: 5.0e-04
+weight_decay: 1.0e-05
+min_learning_rate: 5.0e-06
 T_max: 10
 gamma: 0.8
 epochs: 100

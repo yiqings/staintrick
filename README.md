@@ -23,7 +23,7 @@ Generally, we don't depend on any specific libraries.
 
 If datasets are not on you device, use [`download.py`](preprocess/download.py) to download the zip files and unzip in the terminal.
 
-1. Firstly, change the hyperparameters in `config.yaml`,
+1. Firstly, change the hyperparameters in [`config.yaml`](config.yaml),
 e.g., `train_root` pointed to the training set, `test_root` to the validation set, `output_path` to the output path where loggings and checkpoints are saved. 
 2. To train the model, simpily run
 ```
